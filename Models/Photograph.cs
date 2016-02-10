@@ -7,6 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhotoPorto.Models
 {
+    /// <summary>
+    /// Model ofr Photograph.
+    /// </summary>
     public class Photograph
     {
 		    public int ID { get; set; }
@@ -17,7 +20,8 @@ namespace PhotoPorto.Models
 
 			public string Description { get; set; }
 			public string Type { get; set; }
-			public string Tags { get; set;}
+            public string Tags { get; set; }
+
 
             /**
             RSA encrypted ID with Salt to be be used in naming of orignal and full images.
@@ -33,14 +37,13 @@ namespace PhotoPorto.Models
             //[Editable(false)]
             //public string Salt { get; set; }
 
-            /**
-            Key used while naming of original image files:
-            Naming be like:
-                            ID_key_resolution.jpg
-            where,
-                    key= generated key stored here
-                    esolution = resolution to which split image is created
-            */
+            /// <summary>OriginalPhotographKey is key used while naming of original image files:
+            /// Naming be like:
+            ///                 ID_key_resolution.jpg
+            ///          where,
+            ///                  key = generated key stored here
+            ///                  resolution = resolution to which split image is created
+            /// </summary>
             [Editable(false)]
             public string OriginalPhotographKey { get; set; }
 
