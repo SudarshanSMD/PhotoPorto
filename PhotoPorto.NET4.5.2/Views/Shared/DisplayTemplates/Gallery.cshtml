@@ -1,0 +1,19 @@
+﻿@model PhotoPorto.Models.Gallery
+
+@{
+   // var GalleryPhotographName = Model.ID + ".jpg";  
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-2">
+        <img src="~/photograph/@Model.Description/" />
+    </div>
+    <div class="col-md-8">
+        <h3>@Model.Title</h3>
+        <p>@Model.Description</p>           
+    </div>
+    
+</div>
+
+@*http://jameschambers.com/2014/06/day-9-templates-for-complex-types/*@

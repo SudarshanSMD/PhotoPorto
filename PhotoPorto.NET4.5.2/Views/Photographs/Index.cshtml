@@ -1,0 +1,128 @@
+﻿@model IEnumerable<PhotoPorto.Models.Photograph>
+
+@{
+    ViewBag.Title = "Photographs";
+}
+
+@*<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tags)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OriginalPhotographKey)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SplitPhotographKey)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhotographWidth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhotographHeight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UHD4K)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FHD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.qHD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nHD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LikeCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FavouriteCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tags)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OriginalPhotographKey)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SplitPhotographKey)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhotographWidth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhotographHeight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UHD4K)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FHD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.qHD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nHD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LikeCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FavouriteCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>*@
+
+
+
+@Html.DisplayForModel()
+
