@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "Content/bootstrap.css",
+    "inputFiles": [
+      "Content/bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "Models/Photograph.cs",
+    "inputFiles": [
+      "Models/Photograph.cs"
+    ]
+  }
+]

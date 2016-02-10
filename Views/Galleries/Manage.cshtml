@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<PhotoPorto.Models.Gallery>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@*@model IEnumerable<PhotoPorto.Models.Gallery>*@
+@{
+    ViewBag.Title = "Galleries";
+}
+
+<h2>Manage: Galleries</h2>
+<p>
+    <a class="btn btn-primary btn-large" href='@Url.RouteUrl("Galleries_Create_route")'>Create</a>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Title", "Manage", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @*@Html.DisplayNameFor(model => model.Title)*@
+        </th>
+        <th>
+            Description
+            @*@Html.DisplayNameFor(model => model.Description)*@
+        </th>
+        <th>
+            @Html.ActionLink("Creation Date", "Manage", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
+            @*@Html.DisplayNameFor(model => model.CreationDate)*@
+        </th>
+        <th>
+            Last Modified Date
+            @*@Html.DisplayNameFor(model => model.LastModifiedDate)*@
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModifiedDate)
+            </td>
+            <td>
+                <a class="btn btn-primary btn-large" href='@Url.RouteUrl("Galleries_Edit_GalleryId_route", new { id = item.ID})'>Edit</a>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.ID })*@
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary btn-large" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary btn-large" })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Manage",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
