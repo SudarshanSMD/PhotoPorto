@@ -21,17 +21,7 @@ namespace PhotoPorto.DAL
 
             base.OnModelCreating(modelBuilder);
 
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
-            /*
-         modelBuilder.Entity<Gallery>()
-         .HasMany(c => c.Photographs).WithMany(i => i.Galleries)
-         .Map(t => t.MapLeftKey("GalleryID")
-             .MapRightKey("PhotographsID")
-             .ToTable("GalleryPhotograph"));
-             */
-
+            //many-to-many relation of Gallery and Photogrph tables using GalleryPhotograph table
             modelBuilder.Entity<Gallery>()
               .HasMany<Photograph>(s => s.Photographs)
               .WithMany(c => c.Galleries)
@@ -41,8 +31,6 @@ namespace PhotoPorto.DAL
                   cs.MapRightKey("PhotographsID");
                   cs.ToTable("GalleryPhotograph");
               });
-
-
         }
         public DbSet<Gallery> Gallery { get; set; }
 		public DbSet<Photograph> Photograph { get; set; }

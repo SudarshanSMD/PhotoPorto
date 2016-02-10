@@ -20,6 +20,7 @@ namespace PhotoPorto.Utility
     public class ImageUtility
     {
         /*
+        //Using ImageMagick. Is slower.
         public static void ResizeImage(string inputImagePathString, String outputImagePathName, int maxWidth)
         {            
             // Read from file

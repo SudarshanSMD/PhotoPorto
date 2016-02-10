@@ -5,6 +5,9 @@ using System.Web;
 
 namespace PhotoPorto.Utility
 {
+    /// <summary>
+    /// Constant values used in application go here.
+    /// </summary>
     public class Constants
     {
         public const int SPLIT_IMAGE_COLUMN_COUNT = 10;
