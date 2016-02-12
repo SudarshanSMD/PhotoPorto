@@ -10,5 +10,17 @@
     "inputFiles": [
       "Models/Photograph.cs"
     ]
+  },
+  {
+    "outputFileName": "Views/Shared/DisplayTemplates/Photograph.cshtml",
+    "inputFiles": [
+      "Views/Shared/DisplayTemplates/Photograph.cshtml"
+    ]
+  },
+  {
+    "outputFileName": "Views/Galleries/Details.cshtml",
+    "inputFiles": [
+      "Views/Galleries/Details.cshtml"
+    ]
   }
 ]

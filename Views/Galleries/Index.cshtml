@@ -52,24 +52,24 @@
 
 </table>*@
 
-@*@Html.DisplayForModel()*@
+@Html.DisplayForModel()
 
 
-<!-- Page Content -->
-<div class="container">
-
-@foreach (var gallery in Model)
-{
-    <!-- Jumbotron Header -->
-    <header class="jumbotron hero-spacer">
-        <h1>@gallery.Title</h1>
-        <p>@gallery.Description</p>
-        <p>
-            <a class="btn btn-primary btn-large" href='@Url.Action("Details", "Galleries", new {  id = gallery.ID})'>View</a>
-        </p>
-    </header>
-}
-
-</div>
+@*
+    <!-- Page Content -->
+    <div class="container">
+    @foreach (var gallery in Model)
+    {
+        <!-- Jumbotron Header -->
+        <header class="jumbotron hero-spacer">
+            <h1>@gallery.Title</h1>
+            <p>@gallery.Description</p>
+            <p>
+                <a class="btn btn-primary btn-large" href='@Url.Action("Details", "Galleries", new {  id = gallery.ID})'>View</a>
+            </p>
+        </header>
+    }
+    </div>
+*@
 
 @*https://github.com/BlackrockDigital/startbootstrap-heroic-features*@
