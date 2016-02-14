@@ -13,10 +13,16 @@
 <script>
     (function () {
 
-        //Defining Canvad dimentions
+        //Defining Canvas dimentions
         // TODO: set width percent dynamically, depending upon device.
         var CanvasXSize = (getPageWith() / 100) * 60;
         var CanvasYSize = 300;
+
+        //Set galleryCanvas dimentions
+        var galleryCanvasElement = document.getElementById('galleryCanvas-@Model.ID');
+        galleryCanvasElement.height = CanvasYSize;
+        galleryCanvasElement.width = CanvasXSize;
+
 
         //imageSrcs array contains relative path of photographs in gallery
         //var imageSrcs = ["photograph/1/1.jpg", "photograph/3/3.jpg", "photograph/4/4.jpg", "photograph/5/5.jpg", "photograph/6/6.jpg"];
@@ -25,20 +31,14 @@
         {
             @:imageSrcs.push('/photograph/' +@photograph.ID +'/' +@photograph.ID +'.jpg');
         }
-
-        // Array to hold images
-        var images = [];
-
-        /*
-         * galleryCanvas
-         *
-         */
-        var galleryCanvasElement = document.getElementById('galleryCanvas-@Model.ID');
-        galleryCanvasElement.height = CanvasYSize;
-        galleryCanvasElement.width = CanvasXSize;
-
+        
         //Load images and draw over galery canas
-        preloadImagesForGalleryCanvas(imageSrcs, images, 'galleryCanvas-@Model.ID');
+        preloadImagesForGalleryCanvas(imageSrcs, 'galleryCanvas-@Model.ID');
+
+        //Adding onclick event on galleryCanvas.
+        document.getElementById("galleryCanvas-@Model.ID").onclick = function (e) {
+            window.location.href = '@Url.Action("Details", "Galleries", new { id = Model.ID })';
+        };
 
     })();
 </script>

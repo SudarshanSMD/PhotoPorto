@@ -6816,6 +6816,21 @@ td.visible-print {
   }
 }
 
+/*Addition css is written below this*/ 
 .min-height-75 {
     min-height: 75px;
 }
+
+.gi-1x{font-size: 1em;}
+.gi-1_5x{font-size: 1.5em;}
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+/*form unstyling anchor*/
+.a-unstyled { color: #333; }
+.a-unstyled:link { color: #333; }
+.a-unstyled:visited { color: #333; }
+.a-unstyled:hover { color: #000;  text-decoration: none; }
+.a-unstyled:active { color: #333; }

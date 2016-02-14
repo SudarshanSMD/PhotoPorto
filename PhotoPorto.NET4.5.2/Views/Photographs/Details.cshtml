@@ -14,7 +14,8 @@
     if (resolution == null)
     {
         resolution = "qHD";
-        if (!Model.qHD) {
+        if (!Model.qHD)
+        {
             if (Model.nHD)
             {
                 resolution = "nHD";
@@ -57,7 +58,12 @@
 }
 
 <div class="container">
-    <br />
+
+    @if (isRoutedFromGallery)
+    {        
+        <a href='@Url.Action("Details", "Galleries", new {  id = galleryIdFromURL})' class="glyphicon glyphicon-chevron-left gi-1_5x a-unstyled"  aria-hidden="true"></a>        
+    }
+    
     <h2>@Model.Title</h2>
 
     <div style="z-index: 1000;">
@@ -75,10 +81,10 @@
                 }
             </table>
         }
-        else {            
-            <img src='~/photograph/@Model.ID/@(Model.ID+"_"+ Model.OriginalPhotographKey+".jpg")' draggable="false" />
+        else {
+            <img src='~/photograph/@Model.ID/@(Model.ID + ".jpg")' draggable="false" />
         }
-        
+
     </div>
 
     @if (Model.qHD)
@@ -155,20 +161,20 @@
         </dl>
     </div>
 </div>
-    @*@Html.DisplayForModel()*@
+@*@Html.DisplayForModel()*@
 
-    @*<p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>*@
+@*<p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
 
-    <script language="javascript">
-        document.oncontextmenu = function () { return false; };
-        // $('img').on('dragstart', function (event) { event.preventDefault(); });
+<script language="javascript">
+    document.oncontextmenu = function () { return false; };
+    // $('img').on('dragstart', function (event) { event.preventDefault(); });
 
-        //  var images = document.getElementsByTagName('img');
-        // for (var i = 0; i < images.length; i++) {
-        //     images[i].ondragstart.bind( event.preventDefault());
-        //     // images[i].ondragstart.bind();
-        // }
-    </script>
+    //  var images = document.getElementsByTagName('img');
+    // for (var i = 0; i < images.length; i++) {
+    //     images[i].ondragstart.bind( event.preventDefault());
+    //     // images[i].ondragstart.bind();
+    // }
+</script>

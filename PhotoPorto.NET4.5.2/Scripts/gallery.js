@@ -1,7 +1,8 @@
 ﻿/**
 PreloadImages functions loads images using image path from array. Images are added to 'imgs' array. On comopletion of loading of all images from 'srcs' array, callback function is called.
 */
-function preloadImagesForGalleryCanvas(srcs, imgs, galleryCanvasId) {
+function preloadImagesForGalleryCanvas(srcs, galleryCanvasId) {
+    var images = [];
     var img;
     var remaining = srcs.length;
     for (var i = 0; i < srcs.length; i++) {
@@ -11,11 +12,11 @@ function preloadImagesForGalleryCanvas(srcs, imgs, galleryCanvasId) {
             if (remaining <= 0) {
                 //callback(galleryCanvasId, imgs);
                 //callback.apply(galleryCanvasId, imgs);
-                drawOverGalleryCanvas(galleryCanvasId, imgs);
+                drawOverGalleryCanvas(galleryCanvasId, images);
             }
         };
         img.src = srcs[i];
-        imgs.push(img);
+        images.push(img);
     }
 }
 
