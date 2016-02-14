@@ -1,181 +1,45 @@
 ﻿@model PhotoPorto.Models.Gallery
 
-@{
-
-}
-
-
-@*<div class="jumbotron hero-spacer">
-    <h1>@Model.Title</h1>
-    <p>@Model.Description </p>
-    <p>
-        <a class="btn btn-primary btn-large" href='@Url.Action("Details", "Galleries", new {  id = Model.ID})'>View</a>
-    </p>
-</div>*@
-
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h1>@Model.Title <small>@Model.Description</small> <a class="btn btn-primary btn-large" href='@Url.Action("Details", "Galleries", new {  id = Model.ID})'>View</a></h1> 
+            <h1>@Model.Title <small>@Model.Description</small> <a class="btn btn-primary btn-large" href='@Url.Action("Details", "Galleries", new {  id = Model.ID})'>View</a></h1>
         </div>
         <canvas id="galleryCanvas-@Model.ID"></canvas>
-     </div>
+    </div>
 </div>
 
+@Scripts.Render("~/bundles/gallery")
+<script>
+    (function () {
 
-        <script>
-            (function () {               
+        //Defining Canvad dimentions
+        // TODO: set width percent dynamically, depending upon device.
+        var CanvasXSize = (getPageWith() / 100) * 60;
+        var CanvasYSize = 300;
 
-
-                // Initializatio on galleryCanvas
-                //var imageSrcs = ["photograph/1/1.jpg", "photograph/3/3.jpg", "photograph/4/4.jpg", "photograph/5/5.jpg", "photograph/6/6.jpg"];
-                var imageSrcs = [];
-                @foreach (var photograph in Model.Photographs)
+        //imageSrcs array contains relative path of photographs in gallery
+        //var imageSrcs = ["photograph/1/1.jpg", "photograph/3/3.jpg", "photograph/4/4.jpg", "photograph/5/5.jpg", "photograph/6/6.jpg"];
+        var imageSrcs = [];
+        @foreach (var photograph in Model.Photographs)
         {
             @:imageSrcs.push('/photograph/' +@photograph.ID +'/' +@photograph.ID +'.jpg');
-                        }
-                //console.log(imageSrcs);
-                var images = [];
+        }
 
-                var galleryCanvasWidth = (getWidth() / 100) * 60;
-                var CanvasXSize = galleryCanvasWidth;
-                var CanvasYSize = 300;
+        // Array to hold images
+        var images = [];
 
-                //To preload Images and call callback function
-                function preloadImages(srcs, imgs, callback) {
-                    //console.log("In preload images");
-                    var img;
-                    var remaining = srcs.length;
-                    for (var i = 0; i < srcs.length; i++) {                        
-                        img = new Image();
-                        img.onload = function () {
-                            --remaining;
-                            if (remaining <= 0) {
-                                callback();
-                            }
-                        };
-                        img.src = srcs[i];
-                        imgs.push(img);
-                    }
-                    //console.log("Preload images ending");
-                }
+        /*
+         * galleryCanvas
+         *
+         */
+        var galleryCanvasElement = document.getElementById('galleryCanvas-@Model.ID');
+        galleryCanvasElement.height = CanvasYSize;
+        galleryCanvasElement.width = CanvasXSize;
 
+        //Load images and draw over galery canas
+        preloadImagesForGalleryCanvas(imageSrcs, images, 'galleryCanvas-@Model.ID');
 
-
-
-                /*
-                 * galleryPloygonImagesCanvas
-                 *
-                 */
-                var galleryPolygonImagesElement = document.getElementById('galleryCanvas-@Model.ID');
-                //var galleryCanvasWidth = (getWidth() / 100) * 80;
-                galleryPolygonImagesElement.height = 300;
-                galleryPolygonImagesElement.width = galleryCanvasWidth;
-
-                preloadImages(imageSrcs, images, drawOverGalleryPloygonImagesCanvas);
-
-                function drawOverGalleryPloygonImagesCanvas() {
-
-                    var galleryPolygonImagesCtx = document.getElementById('galleryCanvas-@Model.ID').getContext('2d');
-
-                    //Clear Canvas
-                    galleryPolygonImagesCtx.clearRect(0, 0, CanvasXSize, CanvasYSize);
-                    galleryPolygonImagesCtx.fillstyle = "grey";
-                    galleryPolygonImagesCtx.fill();
-
-                    var tempImagesPointer = 0;
-                    var xPivot = 0;
-                    var yPivot = 0;
-                    for (var xTemp = 0; xTemp < 20; xTemp += 1) {
-                        xPivot = xTemp * 100;
-
-                        if (xPivot > CanvasXSize) {
-                            break;
-                        }
-                        for (var yTemp = 0; yTemp < 3; yTemp += 1) {
-                            yPivot = yTemp * 100;
-
-                            var pattern = galleryPolygonImagesCtx.createPattern(images[tempImagesPointer], "repeat");
-                            galleryPolygonImagesCtx.fillStyle = pattern;
-                            galleryPolygonImagesCtx.beginPath();
-                            galleryPolygonImagesCtx.moveTo(xPivot + 5, yPivot);
-                            galleryPolygonImagesCtx.lineTo(xPivot + 100, yPivot);
-                            galleryPolygonImagesCtx.lineTo(xPivot + 100, yPivot + 50);
-                            //                            galleryPolygonImagesCtx.lineTo(xPivot + 0, yPivot + 90);
-                            galleryPolygonImagesCtx.closePath();
-                            galleryPolygonImagesCtx.fill();
-
-                            //                            galleryPolygonImagesCtx.fillStyle = pattern;
-                            galleryPolygonImagesCtx.beginPath();
-                            galleryPolygonImagesCtx.moveTo(xPivot, yPivot);
-                            galleryPolygonImagesCtx.lineTo(xPivot + 100, yPivot + 50);
-                            galleryPolygonImagesCtx.lineTo(xPivot + 50, yPivot + 100);
-                            galleryPolygonImagesCtx.lineTo(xPivot + 0, yPivot + 90);
-                            galleryPolygonImagesCtx.closePath();
-                            galleryPolygonImagesCtx.fill();
-
-                            //                            galleryPolygonImagesCtx.fillStyle = pattern;
-                            galleryPolygonImagesCtx.beginPath();
-                            galleryPolygonImagesCtx.moveTo(xPivot + 100, yPivot + 55);
-                            galleryPolygonImagesCtx.lineTo(xPivot + 55, yPivot + 100);
-                            galleryPolygonImagesCtx.lineTo(xPivot + 95, yPivot + 105);
-                            //                            galleryPolygonImagesCtx.lineTo(xPivot + 0, yPivot + 90);
-                            galleryPolygonImagesCtx.closePath();
-                            galleryPolygonImagesCtx.fill();
-
-                            tempImagesPointer++;
-                            if (tempImagesPointer >= images.length) {
-                                tempImagesPointer = 0;
-                            }
-                        }
-                    }
-
-//                     galleryPolygonImagesCtx.fillStyle = "black";
-//                     galleryPolygonImagesCtx.font = "63px Arial";
-//                     galleryPolygonImagesCtx.fillText("@Model.Title", 100, 100);
-// 
-//                     galleryPolygonImagesCtx.fillStyle = "black";
-//                     galleryPolygonImagesCtx.font = "21px Arial";
-//                     galleryPolygonImagesCtx.fillText("@Model.Description", 100, 150);
-
-
-                }
-
-
-
-                //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-                // Returns a random integer between min (included) and max (included)
-                // Using Math.round() will give you a non-uniform distribution!
-                function getRandomIntInclusive(min, max) {
-                    return Math.floor(Math.random() * (max - min + 1)) + min;
-                }
-
-
-                /**
-                 * Returns width of scaled image for corresponding maxHeight.
-                 *
-                 * Use this if you want to calculate width of image for fixed height, keeping the aspect ratio.
-                 */
-                function getWidthForMaxHeightOfImage(width, height, maxHeight) {
-                    var ratio = maxHeight / height;
-                    return width * ratio;
-                }
-
-
-
-                function getWidth() {
-                    if (self.innerHeight) {
-                        return self.innerWidth;
-                    }
-
-                    if (document.documentElement && document.documentElement.clientWidth) {
-                        return document.documentElement.clientWidth;
-                    }
-
-                    if (document.body) {
-                        return document.body.clientWidth;
-                    }
-                }
-            })();
-        </script>
-        @*http://jameschambers.com/2014/06/day-9-templates-for-complex-types/*@
+    })();
+</script>
+@*http://jameschambers.com/2014/06/day-9-templates-for-complex-types/*@

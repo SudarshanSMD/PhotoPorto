@@ -22,5 +22,17 @@
     "inputFiles": [
       "Views/Galleries/Details.cshtml"
     ]
+  },
+  {
+    "outputFileName": "Scripts/",
+    "inputFiles": [
+      "Scripts/"
+    ]
+  },
+  {
+    "outputFileName": "App_Start/BundleConfig.cs",
+    "inputFiles": [
+      "App_Start/BundleConfig.cs"
+    ]
   }
 ]
