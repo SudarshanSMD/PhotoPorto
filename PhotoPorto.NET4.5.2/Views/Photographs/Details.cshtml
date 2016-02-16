@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = Model.Title;
 
+    //flag showing the split images availability
     bool isSplitImageAvailable = true;
     if (!Model.nHD && !Model.qHD && !Model.HD && !Model.FHD && !Model.UHD4K)
     {
@@ -30,8 +31,7 @@
         }
     }
 
-
-    //Preparing photographArray which contains names of split photogrpah files.
+    //Preparing photographArray which contains names of split photograph files.
     string[,] PhotographArray = new string[Model.SplitRowCount, Model.SplitColumnCount];
     for (int i = 0; i < Model.SplitRowCount; i++)
     {
@@ -41,87 +41,88 @@
         }
     }
 
+    //Creating list of tags, inorder to be able to be displayed using _StringCollectionPartial
     List<string> PhotographTags = Model.Tags.Split(',').ToList();
 
-    string urlPathAndQuery = Request.Url.PathAndQuery;
-    int galleryIdFromURL = -1;
+    //flag indicating if request to view photogorphs comes from gallery
     bool isRoutedFromGallery = false;
+    int galleryIdFromURL = -1;
+    string urlPathAndQuery = Request.Url.PathAndQuery;
     if (urlPathAndQuery.Contains("Galleries"))
     {
         isRoutedFromGallery = true;
         string partialUrlPathAndQuery = urlPathAndQuery.Substring(urlPathAndQuery.LastIndexOf("Galleries/"));
-        // .Substring(10); to remove Galleries/ whose length is 10
+        // .Substring(10); to remove 'Galleries/' from url whose length is 10
         partialUrlPathAndQuery = partialUrlPathAndQuery.Substring(10);
-        int tempIndex = partialUrlPathAndQuery.IndexOf("/");
         galleryIdFromURL = int.Parse(partialUrlPathAndQuery.Substring(0, partialUrlPathAndQuery.IndexOf("/")));
     }
 }
 
+
 <div class="container">
 
     @if (isRoutedFromGallery)
-    {        
-        <a href='@Url.Action("Details", "Galleries", new {  id = galleryIdFromURL})' class="glyphicon glyphicon-chevron-left gi-1_5x a-unstyled"  aria-hidden="true"></a>        
+    {
+        <a href='@Url.Action("Details", "Galleries", new {  id = galleryIdFromURL})' class="glyphicon glyphicon-chevron-left gi-1_5x a-unstyled" aria-hidden="true"></a>
     }
-    
+
     <h2>@Model.Title</h2>
 
-    <div style="z-index: 1000;">
-        @if (isSplitImageAvailable)
-        {
-            <table cellpadding="0" style="border-spacing: 0">
-                @for (int i = 0; i < Model.SplitRowCount; i++)
-                {
-                    <tr>
-                        @for (int j = 0; j < Model.SplitColumnCount; j++)
-                        {
-                            <td><img src="~/photograph/@Model.ID/@PhotographArray[i, j]" draggable="false" /></td>
-                        }
-                    </tr>
-                }
-            </table>
-        }
-        else {
-            <img src='~/photograph/@Model.ID/@(Model.ID + ".jpg")' draggable="false" />
-        }
+    @*<div style="position: absolute; width: 100%; height: 100%; top: 0px; right: 0px;"></div>*@
 
-    </div>
-
-    @if (Model.qHD)
+    @if (isSplitImageAvailable)
     {
-        if (isRoutedFromGallery)
-        {
-            <a href='@Url.RouteUrl("Galleries_GalleryId_Photographs_PhotographId_Route", new { id = Model.ID, galleryId = galleryIdFromURL,  resolution = "qHD"})'>qHD</a>
-        }
-        else {
-            @Html.ActionLink("qHD", "Details", new { id = Model.ID, resolution = "qHD" })
-        }
-    }
-
-
-
-    @if (Model.FHD)
-    {
-        if (isRoutedFromGallery)
-        {
-            <a href='@Url.RouteUrl("Galleries_GalleryId_Photographs_PhotographId_Route", new { id = Model.ID, galleryId = galleryIdFromURL,  resolution = "FHD"})'>FHD</a>
-        }
-        else {
-            @Html.ActionLink("FHD", "Details", new { id = Model.ID, resolution = "FHD" })
-        }
-    }
-
-
-    @if (Model.UHD4K)
+        <table id="imageTable" cellpadding="0" style="border-spacing: 0;" class="unselectable">
+            @for (int i = 0; i < Model.SplitRowCount; i++)
             {
-                if (isRoutedFromGallery)
-                {
-            <a href='@Url.RouteUrl("Galleries_GalleryId_Photographs_PhotographId_Route", new { id = Model.ID, galleryId = galleryIdFromURL, resolution = "4k" })'>4k</a>
-        }
-        else {
-            @Html.ActionLink("4k", "Details", new { id = Model.ID, resolution = "4k" })
-        }
+                <tr>
+                    @for (int j = 0; j < Model.SplitColumnCount; j++)
+                    {
+                        <td><img src="~/photograph/@Model.ID/@PhotographArray[i, j]" draggable="false" onselectstart="return false;" ondragstart="return false;" /></td>
+                    }
+                </tr>
+            }
+        </table>
     }
+    else {
+        <img src='~/photograph/@Model.ID/@(Model.ID + ".jpg")' draggable="false" />
+    }
+
+
+    <div>
+        @if (Model.qHD)
+        {
+            if (isRoutedFromGallery)
+            {
+                <a href='@Url.RouteUrl("Galleries_GalleryId_Photographs_PhotographId_Route", new { id = Model.ID, galleryId = galleryIdFromURL,  resolution = "qHD"})'>qHD</a>
+            }
+            else {
+                @Html.ActionLink("qHD", "Details", new { id = Model.ID, resolution = "qHD" })
+            }
+        }
+                
+        @if (Model.FHD)
+        {
+            if (isRoutedFromGallery)
+            {
+                <a href='@Url.RouteUrl("Galleries_GalleryId_Photographs_PhotographId_Route", new { id = Model.ID, galleryId = galleryIdFromURL,  resolution = "FHD"})'>FHD</a>
+            }
+            else {
+                @Html.ActionLink("FHD", "Details", new { id = Model.ID, resolution = "FHD" })
+            }
+        }
+        
+        @if (Model.UHD4K)
+        {
+            if (isRoutedFromGallery)
+            {
+                <a href='@Url.RouteUrl("Galleries_GalleryId_Photographs_PhotographId_Route", new { id = Model.ID, galleryId = galleryIdFromURL, resolution = "4k" })'>4k</a>
+            }
+            else {
+                @Html.ActionLink("4k", "Details", new { id = Model.ID, resolution = "4k" })
+            }
+        }
+    </div>
 
     <div>
         <h4>@Model.Description</h4>
@@ -161,20 +162,7 @@
         </dl>
     </div>
 </div>
-@*@Html.DisplayForModel()*@
-
-@*<p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@
 
 <script language="javascript">
     document.oncontextmenu = function () { return false; };
-    // $('img').on('dragstart', function (event) { event.preventDefault(); });
-
-    //  var images = document.getElementsByTagName('img');
-    // for (var i = 0; i < images.length; i++) {
-    //     images[i].ondragstart.bind( event.preventDefault());
-    //     // images[i].ondragstart.bind();
-    // }
 </script>
