@@ -1,4 +1,34 @@
-﻿/**
+﻿var CanvasXSize;
+var CanvasYSize;
+(function () {
+    //Defining Canvas dimentions
+    // TODO: set width percent dynamically, depending upon device.
+    CanvasXSize = (getPageWith() / 100) * 60;
+    CanvasYSize = 300;
+ })();
+
+
+/**
+ Function to draw canvas gallery. It prepares canvas, then call preloadImagesForGalleryCanvas(), which then calls drawOverGalleryCanvas().
+*/
+function prepareGalleryCanvas(galleryId, galleryCanvasId, imageSrcs) {
+
+    //Set galleryCanvas dimentions
+    var galleryCanvasElement = document.getElementById(galleryCanvasId);
+    galleryCanvasElement.height = CanvasYSize;
+    galleryCanvasElement.width = CanvasXSize;
+
+    //Adding onclick event on galleryCanvas.
+    document.getElementById(galleryCanvasId).onclick = function (e) {
+        window.location.href = '/Galleries/'+galleryId;
+    };
+
+    //Load images and draw over galery canas
+    preloadImagesForGalleryCanvas(imageSrcs, galleryCanvasId);
+}
+
+
+/**
 PreloadImages functions loads images using image path from array. Images are added to 'imgs' array. On comopletion of loading of all images from 'srcs' array, callback function is called.
 */
 function preloadImagesForGalleryCanvas(srcs, galleryCanvasId) {

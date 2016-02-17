@@ -12,32 +12,44 @@ using PhotoPorto.Models;
 
 namespace PhotoPorto.Controllers
 {
-    //[Route("Galleries")]
     public class GalleriesController : Controller
     {
         private DAL.PhotoPortoDbContext db = new DAL.PhotoPortoDbContext();
 
         // GET: Galleries
         [Route("Galleries")]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            IEnumerable<Gallery> GalleryList = db.Gallery.Include(p => p.Photograph).ToList();
-            foreach (Gallery g in GalleryList)
+            string sortOrder = "";
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            var galleries = from g in db.Gallery select g;
+            switch (sortOrder)
             {
-                db.Entry(g).Reference(p => p.Photograph).Load();
+                case "name_desc":
+                    galleries = galleries.OrderByDescending(p => p.Title);
+                    break;
+                case "Date":
+                    galleries = galleries.OrderBy(p => p.CreationDate);
+                    break;
+                case "date_desc":
+                    galleries = galleries.OrderByDescending(p => p.CreationDate);
+                    break;
+                default:  // Name ascending 
+                    galleries = galleries.OrderBy(p => p.Title);
+                    break;
+            }         
+
+            if(pageNumber == 1)
+            {
+                return View(galleries.ToPagedList(pageNumber, pageSize));
             }
-
-            return View(GalleryList);
-            //            return View(db.Gallery.Include(p => p.Photograph).ToList());
+            else
+            {
+                return PartialView("~/Views/Galleries/GalleriesIndexPartial.cshtml", galleries.ToPagedList(pageNumber, pageSize));
+            }  
         }
-
-        // GET: Galleries/Manage
-        // [Route("Galleries/Manage",Name = "Galleries_Manage_route")]
-        //    public ActionResult Manage()
-        // {
-        //     IEnumerable<Gallery> GalleryList = db.Gallery.Include(p => p.Photograph).ToList(); 
-        //     return View(GalleryList);
-        //  }
 
         // GET: Galleries/Manage
         [Authorize(Roles = "administrator")]
@@ -87,8 +99,7 @@ namespace PhotoPorto.Controllers
             return View(galleries.ToPagedList(pageNumber, pageSize));            
         }
 
-
-        // GET: Galleries/Details/5
+        // GET: Galleries/5
         //[HttpGet]
         [Route("Galleries/{id?}")]
         [Route("Galleries/{id?}/Photographs")]
@@ -115,7 +126,7 @@ namespace PhotoPorto.Controllers
             return View();
         }
 
-        // POST: Galleries/Create
+        // POST: Galleries
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "administrator")]
@@ -159,7 +170,7 @@ namespace PhotoPorto.Controllers
             return View(galleryPhotographsModel);
         }
 
-        // POST: Galleries/Edit/5
+        // PUT: Galleries/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "administrator")]
@@ -221,8 +232,7 @@ namespace PhotoPorto.Controllers
             return View(gallery);
         }
 
-        // POST: Galleries/Delete/5
-        //        [HttpPost, ActionName("Delete")]
+        //DELETE: Galleries/5        
         [Authorize(Roles = "administrator")]
         [HttpDelete]
         [ValidateAntiForgeryToken]

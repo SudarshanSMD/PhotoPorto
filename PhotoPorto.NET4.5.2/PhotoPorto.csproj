@@ -307,8 +307,8 @@
     <None Include="Properties\PublishProfiles\PhotoPortoNET45220160201120501 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dragdropdiv.js" />
-    <Content Include="Scripts\gallery.js" />
-    <Content Include="Scripts\gallery.min.js" />
+    <Content Include="Scripts\gallery-scroll.js" />
+    <Content Include="Scripts\gallery-canvas.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -373,6 +373,7 @@
     <Content Include="Views\Shared\DisplayTemplates\Gallery.cshtml" />
     <Content Include="Views\Galleries\Manage.cshtml" />
     <Content Include="Views\Photographs\Manage.cshtml" />
+    <Content Include="Views\Galleries\GalleriesIndexPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

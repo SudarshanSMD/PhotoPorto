@@ -9,37 +9,22 @@
     </div>
 </div>
 
-@Scripts.Render("~/bundles/gallery")
 <script>
     (function () {
-
-        //Defining Canvas dimentions
-        // TODO: set width percent dynamically, depending upon device.
-        var CanvasXSize = (getPageWith() / 100) * 60;
-        var CanvasYSize = 300;
-
-        //Set galleryCanvas dimentions
-        var galleryCanvasElement = document.getElementById('galleryCanvas-@Model.ID');
-        galleryCanvasElement.height = CanvasYSize;
-        galleryCanvasElement.width = CanvasXSize;
-
-
-        //imageSrcs array contains relative path of photographs in gallery
-        //var imageSrcs = ["photograph/1/1.jpg", "photograph/3/3.jpg", "photograph/4/4.jpg", "photograph/5/5.jpg", "photograph/6/6.jpg"];
+        @*//imageSrcs array contains relative path of photographs in gallery
+        //var imageSrcs = ["photograph/1/1.jpg", "photograph/3/3.jpg", "photograph/4/4.jpg", "photograph/5/5.jpg", "photograph/6/6.jpg"];*@
         var imageSrcs = [];
         @foreach (var photograph in Model.Photographs)
         {
             @:imageSrcs.push('/photograph/' +@photograph.ID +'/' +@photograph.ID +'.jpg');
         }
-        
-        //Load images and draw over galery canas
-        preloadImagesForGalleryCanvas(imageSrcs, 'galleryCanvas-@Model.ID');
 
-        //Adding onclick event on galleryCanvas.
-        document.getElementById("galleryCanvas-@Model.ID").onclick = function (e) {
-            window.location.href = '@Url.Action("Details", "Galleries", new { id = Model.ID })';
-        };
-
+        prepareGalleryCanvas(@Model.ID, 'galleryCanvas-@Model.ID', imageSrcs);
     })();
 </script>
-@*http://jameschambers.com/2014/06/day-9-templates-for-complex-types/*@
+
+@*
+    NOTE: Gallery shared view dependsd on /Scripts/gallery-canvas.js
+    Make sure gallery.js is included in page from which view for model Gallery is called.
+    Alternatively, you can use @Scripts.Render("~/bundles/gallery"), as defined in BundleConfig.cs
+*@
