@@ -3,7 +3,15 @@ var CanvasYSize;
 (function () {
     //Defining Canvas dimentions
     // TODO: set width percent dynamically, depending upon device.
-    CanvasXSize = (getPageWith() / 100) * 60;
+    var galleryCanavasWidthPercentage = 60;
+    var pageWidth = getPageWith();
+    if (pageWidth < 767 && pageWidth > 480) {
+        galleryCanavasWidthPercentage = 80;
+    }
+    else if (pageWidth <= 480) {
+        galleryCanavasWidthPercentage = 90;
+    }
+    CanvasXSize = ( pageWidth/ 100) * galleryCanavasWidthPercentage;
     CanvasYSize = 300;
  })();
 
