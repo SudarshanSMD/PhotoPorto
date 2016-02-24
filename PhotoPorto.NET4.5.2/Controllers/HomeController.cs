@@ -14,9 +14,7 @@ namespace PhotoPorto.Controllers
 
         public ActionResult Index()
         {
-            IEnumerable<Photograph> PhotographList = db.Photograph.Take(4).ToList();
-
-            //return View(db.Photograph.ToList()); db.Photograph.OrderBy(r => Guid.NewGuid()).Take(4).ToList()
+            IEnumerable<Photograph> PhotographList = db.Photograph.OrderByDescending( p => p.FavouriteCount).Take(4).ToList();            
             return View(PhotographList);
         }
 
