@@ -26,6 +26,9 @@ namespace PhotoPorto
             bundles.Add(new ScriptBundle("~/bundles/gallery").Include(
                       "~/Scripts/gallery-canvas.js",
                       "~/Scripts/gallery-scroll.js"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/home").Include(
+                      "~/Scripts/home-canvas.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

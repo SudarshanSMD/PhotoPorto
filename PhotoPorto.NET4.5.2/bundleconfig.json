@@ -40,5 +40,11 @@
     "inputFiles": [
       "Views/Photographs/Details.cshtml"
     ]
+  },
+  {
+    "outputFileName": "photograph/",
+    "inputFiles": [
+      "photograph/"
+    ]
   }
 ]

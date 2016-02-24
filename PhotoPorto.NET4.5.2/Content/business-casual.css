@@ -212,6 +212,19 @@ footer p {
          margin-top: 2%;
 
      }
+     .navbar-inverse {
+         background: rgb(0, 0, 0);
+         background: rgba(0,0,0,0.6);
+         /*background-color: #fff !important;*/
+         /*opacity: 0.2;*/
+         color: black;
+         text-decoration-color: black;
+     }
+
+     .top{
+         top: 0;
+         position: fixed;
+     }
 }
 
 @media screen and (min-width:1200px) {

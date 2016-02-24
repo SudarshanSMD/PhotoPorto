@@ -2,9 +2,51 @@
 
 @{
     ViewBag.Title = "Home";
+    ViewBag.Page = "Home";
+
+    int slideCount = 0;
+    bool isFirstImage = true;
 }
 <link href="@Url.Content("~/Content/thumbnail-gallery.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/business-casual.css")" rel="stylesheet" type="text/css" />
+
+@Scripts.Render("~/bundles/home")
+
+<div id="carousel-example-generic" class="carousel slide top">
+    <!-- Indicators -->
+    <ol class="carousel-indicators hidden-xs">
+        @foreach (var photograph in Model)
+        {
+            if (photograph.FHD)
+            {
+                <li data-target="#carousel-example-generic" data-slide-to="@slideCount" @(slideCount == 0 ? "class=\"active\"" : "")></li>
+                slideCount++;
+            }
+        }
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        @foreach (var photograph in Model)
+        {
+            if (photograph.FHD)
+            {
+                <div class="item@(isFirstImage == true ? " active" : "")">
+                    <canvas id="homeCanvas-@photograph.ID" class="img-responsive img-full"></canvas>
+                </div>
+                isFirstImage = false;
+            }
+        }
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
+</div>
 
 
 <div class="container">
@@ -13,73 +55,74 @@
         <div class="box">
             <div class="col-lg-12 text-center">
                 @*<div id="carousel-example-generic" class="carousel slide">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators hidden-xs">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                    </ol>
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators hidden-xs">
+                            @foreach (var photograph in Model)
+                            {                                
+                                <li data-target="#carousel-example-generic" data-slide-to="@slideCount"  @(slideCount == 0 ? "class=\"active\"" : "")></li>
+                                slideCount++;
+                            }                            
+                        </ol>
 
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <img class="img-responsive img-full" src="img/slide-1.jpg" alt="">
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            @foreach (var photograph in Model)
+                            {
+                               <div class="item@(isFirstImage == true ? " active" : "")">
+                                   <canvas id="homeCanvas-@photograph.ID" class="img-responsive img-full"></canvas>
+                               </div>
+                                isFirstImage = false;                            
+                            }
                         </div>
-                        <div class="item">
-                            <img class="img-responsive img-full" src="img/slide-2.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-responsive img-full" src="img/slide-3.jpg" alt="">
-                        </div>
-                    </div>
 
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                        <span class="icon-prev"></span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                        <span class="icon-next"></span>
-                    </a>
-                </div>*@
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                            <span class="icon-prev"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                            <span class="icon-next"></span>
+                        </a>
+                    </div>*@
                 <h2 class="brand-before">
                     <small>Welcome to</small>
                 </h2>
                 <h1 class="brand-name">Photo Porto</h1>
                 <hr class="tagline-divider">
-                <h2>
-                    <small>version
-                        <strong>alpha</strong>
-                    </small>
-                </h2>
+                @*
+                    <h2>
+                        <small>
+                            version
+                            <strong>alpha</strong>
+                        </small>
+                    </h2>*@
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="box">
-            <div class="col-lg-12">
-                <hr>
-                <h2 class="intro-text text-center">   
+            <div class="col-lg-12 text-center">
+                @*<hr>
+                <h2 class="intro-text text-center">
                     <a href='@Url.Action("Index", "Galleries")'>
                         <strong>Galleries</strong>
-                     </a>
-                        
+                    </a>
                 </h2>
-                <hr>
+                <hr>*@
                 @*<img class="img-responsive img-border img-left" src="img/intro-pic.jpg" alt="">*@
                 <hr class="visible-xs">
-                <p>We are still preparing this page. While we are busy preparing this page, you can have look at galleries. Explore the gallries </p>
-                <p>You can view various galleries from Galleries section.</p>
+                <p>Photographer who likes to dwell in nature and play with long exposure.</p>
+                <p>You can view various galleries from <a href='@Url.Action("Index", "Galleries")'><strong>Galleries</strong></a> section.</p>
                 <p>Each photograph can be viewer in different resolution. High resolution images are available, incase the default image size is too small for you. Enjoy.</p>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    @*<div class="row">
         <div class="box">
             <div class="col-lg-12">
                 <hr>
-                <h2 class="intro-text text-center">                    
+                <h2 class="intro-text text-center">
                     Some of our popular Photographs
                 </h2>
                 <hr>
@@ -90,13 +133,41 @@
                             <img src='~/photograph/@photograph.ID/@(photograph.ID+".jpg")' alt="@photograph.Title" />
                         </a>
                     </div>
-                }              
+                }
             </div>
         </div>
-    </div>
+    </div>*@
 
 </div>
 <!-- /.container -->
-
-
 @*https://github.com/BlackrockDigital/startbootstrap-business-casual*@
+
+<script>
+    (function () {
+        var imageSrcs = [];
+        @foreach (var photograph in Model)
+        {
+            if (photograph.FHD)
+            {
+                 @Html.Raw("imageSrcs = [];");
+                for (int i = 0; i < photograph.SplitRowCount; i++)
+                {
+                    for (int j = 0; j < photograph.SplitColumnCount; j++)
+                    {
+                        @:imageSrcs.push('/photograph/' + '@photograph.ID' + '/' + '@photograph.ID' + '_' + '@photograph.SplitPhotographKey' + '_' + '@j' + '_' + '@i' + '_FHD.jpg');
+                    }
+                }
+                @Html.Raw("prepareHomeCanvas('homeCanvas-" + @photograph.ID + "', imageSrcs);");
+             }
+         }
+
+    })();
+</script>
+
+
+<script language="javascript">    
+    // to disable right click on canvas
+    $('canvas').bind('contextmenu', function (e) {
+        return false;
+    });
+</script>
