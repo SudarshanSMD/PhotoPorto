@@ -2,7 +2,6 @@
 var CanvasYSize;
 (function () {
     //Defining Canvas dimentions
-
     CanvasXSize = getPageWith();
     CanvasYSize = getPageHeight();
 })();
@@ -30,6 +29,8 @@ function preloadImagesForHomeCanvas(srcs, homeCanvasId) {
     var images = [];
     var img;
     var remaining = srcs.length;
+    //To sort the images
+    srcs = srcs.sort();
     for (var i = 0; i < srcs.length; i++) {
         img = new Image();
         img.onload = function () {
@@ -50,7 +51,7 @@ function preloadImagesForHomeCanvas(srcs, homeCanvasId) {
    Draws over canvas with id galleryCanvasId. images contains images that would be used for drawing on canvas.
 */
 function drawOverGalleryCanvas(galleryCanvasId, images) {
-    images = images.sort();
+   // images = images.sort();
 
     var galleryCanvasCtx = document.getElementById(galleryCanvasId).getContext('2d');
       //CanvasYSize = galleryCanvasElement.height;
@@ -61,14 +62,15 @@ function drawOverGalleryCanvas(galleryCanvasId, images) {
   
     // Pointer for tracking image number in array.  
     var imagesPointer = 0;
-    var xPivot = 0;
+    //var xPivot = 0;
     var yPivot = 0;
 
-    var xMax = CanvasXSize / images[imagesPointer].width;
+    var xMax = CanvasXSize / images[imagesPointer].width;    
+        
+    for (var xPivot = 0; xPivot < CanvasXSize;) { 
+        yPivot = 0;
 
-    for (var yTemp = 0; yTemp < 2; yTemp += 1) {
-        xPivot = 0;
-        for (var xTemp = 0; xTemp < xMax; xTemp += 1) {          
+        for (var yTemp = 0; yTemp < 2; yTemp += 1) {
 
             var galleryCanvasPattern = galleryCanvasCtx.createPattern(images[imagesPointer], "repeat");
             galleryCanvasCtx.fillStyle = galleryCanvasPattern;
@@ -80,47 +82,13 @@ function drawOverGalleryCanvas(galleryCanvasId, images) {
             galleryCanvasCtx.closePath();
             galleryCanvasCtx.fill();
 
-            xPivot = xPivot + images[imagesPointer].width;
+            yPivot = yPivot + images[imagesPointer].height;
             imagesPointer++;
-            if (imagesPointer >= images.length) {
-                imagesPointer = 0;
-            }
         }
-        yPivot = yPivot + images[imagesPointer].height;        
-    }
-}
-
-/**
-Return page width
-*/
-function getPageWith() {
-    if (self.innerHeight) {
-        return self.innerWidth;
-    }
-
-    if (document.documentElement && document.documentElement.clientWidth) {
-        return document.documentElement.clientWidth;
-    }
-
-    if (document.body) {
-        return document.body.clientWidth;
-    }
-}
-
-
-/**
-Return page Height
-*/
-function getPageHeight() {
-    if (self.innerWidth) {
-        return self.innerHeight;
-    }
-
-    if (document.documentElement && document.documentElement.clientHeight) {
-        return document.documentElement.clientHeight;
-    }
-
-    if (document.body) {
-        return document.body.clientHeight;
+        xPivot = xPivot + images[imagesPointer].width;
+        // reset the image pointer, if pointer moves beyond array length
+        if (imagesPointer >= images.length) {
+            imagesPointer = 0;
+        }        
     }
 }

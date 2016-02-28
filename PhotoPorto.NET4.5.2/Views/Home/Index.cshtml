@@ -155,8 +155,9 @@
                     for (int j = 0; j < photograph.SplitColumnCount; j++)
                     {
                         @:imageSrcs.push('/photograph/' + '@photograph.ID' + '/' + '@photograph.ID' + '_' + '@photograph.SplitPhotographKey' + '_' + '@j' + '_' + '@i' + '_FHD.jpg');
-                    }
+                            }
                 }
+                @Html.Raw("console.log(imageSrcs);");
                 @Html.Raw("prepareHomeCanvas('homeCanvas-" + @photograph.ID + "', imageSrcs);");
              }
          }
