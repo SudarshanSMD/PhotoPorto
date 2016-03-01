@@ -4,6 +4,8 @@ var CanvasYSize;
     //Defining Canvas dimentions
     CanvasXSize = getPageWith();
     CanvasYSize = getPageHeight();
+    console.log("CanvasXSize: " + CanvasXSize);
+    console.log("CanvasYSize: " + CanvasYSize);
 })();
 
 
@@ -35,7 +37,7 @@ function preloadImagesForHomeCanvas(srcs, homeCanvasId) {
         img = new Image();
         img.onload = function () {
             --remaining;
-            if (remaining <= 0) {
+            if (remaining <= 0) {                
                 //callback(galleryCanvasId, imgs);
                 //callback.apply(galleryCanvasId, imgs);
                 drawOverGalleryCanvas(homeCanvasId, images);
@@ -65,21 +67,41 @@ function drawOverGalleryCanvas(galleryCanvasId, images) {
     //var xPivot = 0;
     var yPivot = 0;
 
-    var xMax = CanvasXSize / images[imagesPointer].width;    
-        
-    for (var xPivot = 0; xPivot < CanvasXSize;) { 
-        yPivot = 0;
+    var splitImageWidth = images[imagesPointer].width;
+    var splitImageHeight = images[imagesPointer].height;
+
+    var xScaleFactor = CanvasXSize / (splitImageWidth * 10);
+    var yScaleFactor = CanvasYSize / (splitImageHeight * 2);
+
+    if (xScaleFactor == NaN) {
+        xScaleFactor = 1;
+    }
+    if (yScaleFactor == NaN) {
+        yScaleFactor = 1;
+    }
+    //galleryCanvasCtx.scale(xScaleFactor, yScaleFactor);
+    galleryCanvasCtx.scale(xScaleFactor, xScaleFactor);
+    //CanvasXSize
+    for (var xPivot = 0; xPivot < 1920;) {
+        yPivot = 0;        
 
         for (var yTemp = 0; yTemp < 2; yTemp += 1) {
-
             var galleryCanvasPattern = galleryCanvasCtx.createPattern(images[imagesPointer], "repeat");
             galleryCanvasCtx.fillStyle = galleryCanvasPattern;
             galleryCanvasCtx.beginPath();
-            galleryCanvasCtx.moveTo(xPivot, yPivot);
+
+            galleryCanvasCtx.moveTo(xPivot, yPivot );
             galleryCanvasCtx.lineTo(xPivot + images[imagesPointer].width, yPivot);
             galleryCanvasCtx.lineTo(xPivot + images[imagesPointer].width, yPivot + images[imagesPointer].height);
             galleryCanvasCtx.lineTo(xPivot, yPivot + images[imagesPointer].height);
+
+            //galleryCanvasCtx.moveTo(xPivot * xScaleFactor, yPivot * yScaleFactor);
+            //galleryCanvasCtx.lineTo((xPivot + images[imagesPointer].width) * xScaleFactor, yPivot * yScaleFactor);
+            //galleryCanvasCtx.lineTo((xPivot + images[imagesPointer].width) * xScaleFactor, (yPivot + images[imagesPointer].height) * yScaleFactor);
+            //galleryCanvasCtx.lineTo(xPivot * xScaleFactor, (yPivot + images[imagesPointer].height) * yScaleFactor);
+
             galleryCanvasCtx.closePath();
+            
             galleryCanvasCtx.fill();
 
             yPivot = yPivot + images[imagesPointer].height;
