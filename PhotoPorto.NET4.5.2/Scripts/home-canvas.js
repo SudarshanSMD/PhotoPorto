@@ -4,30 +4,26 @@ var CanvasYSize;
     //Defining Canvas dimentions
     CanvasXSize = getPageWith();
     CanvasYSize = getPageHeight();
-    console.log("CanvasXSize: " + CanvasXSize);
-    console.log("CanvasYSize: " + CanvasYSize);
 })();
 
 
 /**
  Function to draw canvas gallery. It prepares canvas, then call preloadImagesForGalleryCanvas(), which then calls drawOverGalleryCanvas().
 */
-function prepareHomeCanvas(homeCanvasId, imageSrcs) {
-
-    //Set galleryCanvas dimentions
-    var galleryCanvasElement = document.getElementById(homeCanvasId);
-    galleryCanvasElement.height = CanvasYSize;
-    galleryCanvasElement.width = CanvasXSize;  
+function prepareHomeCanvas(homeCanvasId, imageSrcs, splitColumnCount, splitRowCount) {
+    var canvasElement = document.getElementById(homeCanvasId);
+    canvasElement.height = CanvasYSize;
+    canvasElement.width = CanvasXSize;
 
     //Load images and draw over galery canas
-    preloadImagesForHomeCanvas(imageSrcs, homeCanvasId);
+    preloadImagesForHomeCanvas(imageSrcs, homeCanvasId, splitColumnCount, splitRowCount);
 }
 
 
 /**
 PreloadImages functions loads images using image path from array. Images are added to 'imgs' array. On comopletion of loading of all images from 'srcs' array, callback function is called.
 */
-function preloadImagesForHomeCanvas(srcs, homeCanvasId) {
+function preloadImagesForHomeCanvas(srcs, homeCanvasId, splitColumnCount, splitRowCount) {
     var images = [];
     var img;
     var remaining = srcs.length;
@@ -40,7 +36,7 @@ function preloadImagesForHomeCanvas(srcs, homeCanvasId) {
             if (remaining <= 0) {                
                 //callback(galleryCanvasId, imgs);
                 //callback.apply(galleryCanvasId, imgs);
-                drawOverGalleryCanvas(homeCanvasId, images);
+                drawOverHomeCanvas(homeCanvasId, images, splitColumnCount, splitRowCount);
             }
         };
         img.src = srcs[i];
@@ -48,69 +44,53 @@ function preloadImagesForHomeCanvas(srcs, homeCanvasId) {
     }
 }
 
-
 /**
-   Draws over canvas with id galleryCanvasId. images contains images that would be used for drawing on canvas.
-*/
-function drawOverGalleryCanvas(galleryCanvasId, images) {
-   // images = images.sort();
+ * Draws over canvas having id homeCanvasId.
+ *
+ * @param {string} homeCanvasId
+ * @param {[]} images 
+ * @param {number} splitColumnCount
+ * @param {number} splitRowCount
+ */
+function drawOverHomeCanvas(homeCanvasId, images, splitColumnCount, splitRowCount) {
 
-    var galleryCanvasCtx = document.getElementById(galleryCanvasId).getContext('2d');
-      //CanvasYSize = galleryCanvasElement.height;
-     // CanvasXSize = galleryCanvasElement.width;  
+    // pointer for tracking image number in array.  
+    var imagesPointer = 0;    
+    
+    //image Width and height with all split images combined; Assuming image will always be split in equal parts.
+    var imageWidth = images[imagesPointer].width * splitColumnCount;
+    var imageHeight = images[imagesPointer].height * splitRowCount;
 
-    //Clear Canvas
-    galleryCanvasCtx.clearRect(0, 0, galleryCanvasCtx.width, galleryCanvasCtx.height);
-  
-    // Pointer for tracking image number in array.  
-    var imagesPointer = 0;
-    //var xPivot = 0;
-    var yPivot = 0;
-
-    var splitImageWidth = images[imagesPointer].width;
-    var splitImageHeight = images[imagesPointer].height;
-
-    var xScaleFactor = CanvasXSize / (splitImageWidth * 10);
-    var yScaleFactor = CanvasYSize / (splitImageHeight * 2);
-
+    //calculate scale factor;  scale factor is ratio of canvas width to image width
+    var xScaleFactor = CanvasXSize / imageWidth;
     if (xScaleFactor == NaN) {
         xScaleFactor = 1;
     }
-    if (yScaleFactor == NaN) {
-        yScaleFactor = 1;
-    }
-    //galleryCanvasCtx.scale(xScaleFactor, yScaleFactor);
-    galleryCanvasCtx.scale(xScaleFactor, xScaleFactor);
-    //CanvasXSize
-    for (var xPivot = 0; xPivot < 1920;) {
-        yPivot = 0;        
+    
+    //Get canvas context    
+    var canvasCtx = document.getElementById(homeCanvasId).getContext('2d');
+    canvasCtx.clearRect(0, 0, canvasCtx.width, canvasCtx.height);
 
-        for (var yTemp = 0; yTemp < 2; yTemp += 1) {
-            var galleryCanvasPattern = galleryCanvasCtx.createPattern(images[imagesPointer], "repeat");
-            galleryCanvasCtx.fillStyle = galleryCanvasPattern;
-            galleryCanvasCtx.beginPath();
+    //scale canvas
+    canvasCtx.scale(xScaleFactor, xScaleFactor);
+    
+    for (var xPivot = 0; xPivot < imageWidth; xPivot += images[imagesPointer].width) {
+        for (var yPivot = 0; yPivot < imageHeight; yPivot += images[imagesPointer].height, imagesPointer++) {
 
-            galleryCanvasCtx.moveTo(xPivot, yPivot );
-            galleryCanvasCtx.lineTo(xPivot + images[imagesPointer].width, yPivot);
-            galleryCanvasCtx.lineTo(xPivot + images[imagesPointer].width, yPivot + images[imagesPointer].height);
-            galleryCanvasCtx.lineTo(xPivot, yPivot + images[imagesPointer].height);
+            // reset the image pointer, if pointer moves beyond array length
+            if (imagesPointer >= images.length) {
+                imagesPointer = 0;
+            }
 
-            //galleryCanvasCtx.moveTo(xPivot * xScaleFactor, yPivot * yScaleFactor);
-            //galleryCanvasCtx.lineTo((xPivot + images[imagesPointer].width) * xScaleFactor, yPivot * yScaleFactor);
-            //galleryCanvasCtx.lineTo((xPivot + images[imagesPointer].width) * xScaleFactor, (yPivot + images[imagesPointer].height) * yScaleFactor);
-            //galleryCanvasCtx.lineTo(xPivot * xScaleFactor, (yPivot + images[imagesPointer].height) * yScaleFactor);
-
-            galleryCanvasCtx.closePath();
-            
-            galleryCanvasCtx.fill();
-
-            yPivot = yPivot + images[imagesPointer].height;
-            imagesPointer++;
+            var canvasPattern = canvasCtx.createPattern(images[imagesPointer], "repeat");
+            canvasCtx.fillStyle = canvasPattern;
+            canvasCtx.beginPath();
+            canvasCtx.moveTo(xPivot, yPivot);
+            canvasCtx.lineTo(xPivot + images[imagesPointer].width, yPivot);
+            canvasCtx.lineTo(xPivot + images[imagesPointer].width, yPivot + images[imagesPointer].height);
+            canvasCtx.lineTo(xPivot, yPivot + images[imagesPointer].height);
+            canvasCtx.closePath();
+            canvasCtx.fill();
         }
-        xPivot = xPivot + images[imagesPointer].width;
-        // reset the image pointer, if pointer moves beyond array length
-        if (imagesPointer >= images.length) {
-            imagesPointer = 0;
-        }        
     }
 }

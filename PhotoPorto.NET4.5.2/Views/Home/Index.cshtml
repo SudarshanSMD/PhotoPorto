@@ -58,10 +58,10 @@
                         <!-- Indicators -->
                         <ol class="carousel-indicators hidden-xs">
                             @foreach (var photograph in Model)
-                            {                                
+                            {
                                 <li data-target="#carousel-example-generic" data-slide-to="@slideCount"  @(slideCount == 0 ? "class=\"active\"" : "")></li>
                                 slideCount++;
-                            }                            
+                            }
                         </ol>
 
                         <!-- Wrapper for slides -->
@@ -71,7 +71,7 @@
                                <div class="item@(isFirstImage == true ? " active" : "")">
                                    <canvas id="homeCanvas-@photograph.ID" class="img-responsive img-full"></canvas>
                                </div>
-                                isFirstImage = false;                            
+                                isFirstImage = false;
                             }
                         </div>
 
@@ -103,12 +103,12 @@
         <div class="box">
             <div class="col-lg-12 text-center">
                 @*<hr>
-                <h2 class="intro-text text-center">
-                    <a href='@Url.Action("Index", "Galleries")'>
-                        <strong>Galleries</strong>
-                    </a>
-                </h2>
-                <hr>*@
+                    <h2 class="intro-text text-center">
+                        <a href='@Url.Action("Index", "Galleries")'>
+                            <strong>Galleries</strong>
+                        </a>
+                    </h2>
+                    <hr>*@
                 @*<img class="img-responsive img-border img-left" src="img/intro-pic.jpg" alt="">*@
                 <hr class="visible-xs">
                 <p>Photographer who likes to dwell in nature and play with long exposure.</p>
@@ -119,24 +119,24 @@
     </div>
 
     @*<div class="row">
-        <div class="box">
-            <div class="col-lg-12">
-                <hr>
-                <h2 class="intro-text text-center">
-                    Some of our popular Photographs
-                </h2>
-                <hr>
-                @foreach (var photograph in Model)
-                {
-                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                        <a class="thumbnail" href='@Url.Action("Details", "Photographs", new {  id = photograph.ID})'>
-                            <img src='~/photograph/@photograph.ID/@(photograph.ID+".jpg")' alt="@photograph.Title" />
-                        </a>
-                    </div>
-                }
+            <div class="box">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">
+                        Some of our popular Photographs
+                    </h2>
+                    <hr>
+                    @foreach (var photograph in Model)
+                    {
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <a class="thumbnail" href='@Url.Action("Details", "Photographs", new {  id = photograph.ID})'>
+                                <img src='~/photograph/@photograph.ID/@(photograph.ID+".jpg")' alt="@photograph.Title" />
+                            </a>
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
 
 </div>
 <!-- /.container -->
@@ -155,17 +155,16 @@
                     for (int j = 0; j < photograph.SplitColumnCount; j++)
                     {
                         @:imageSrcs.push('/photograph/' + '@photograph.ID' + '/' + '@photograph.ID' + '_' + '@photograph.SplitPhotographKey' + '_' + '@j' + '_' + '@i' + '_FHD.jpg');
-                            }
-                }                
-                @Html.Raw("prepareHomeCanvas('homeCanvas-" + @photograph.ID + "', imageSrcs);");
+                    }
+                }
+                @Html.Raw("prepareHomeCanvas('homeCanvas-" + @photograph.ID + "', imageSrcs,"+ @photograph.SplitColumnCount+ ", "+ @photograph.SplitRowCount + " );");
              }
          }
-
     })();
 </script>
 
 
-<script language="javascript">    
+<script language="javascript">
     // to disable right click on canvas
     $('canvas').bind('contextmenu', function (e) {
         return false;
