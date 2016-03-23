@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://pushengineering.com/pengineering"
+	elementFormDefault="qualified" xmlns:pref2="http://purl.org/dc/terms/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:sdas="http://pushengineering.com/pengineering">
+
+    <xsd:import schemaLocation="http://dublincore.org/schemas/xmls/qdc/dcterms.xsd" namespace="http://purl.org/dc/terms/"></xsd:import>
+	<xsd:element name="metadata" type="sdas:metaDataType"></xsd:element>
+
+	<xsd:complexType name="metaDataType">
+		<xsd:choice maxOccurs="unbounded" minOccurs="1">
+			<xsd:element name="administrative" type="sdas:administrativeType" maxOccurs="1" minOccurs="1"></xsd:element>
+			<xsd:element name="descriptive" type="sdas:descriptiveType"
+				maxOccurs="1" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="techincal" type="sdas:techincalType"
+				maxOccurs="1" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="miscellaneous"
+				type="sdas:miscellaneousType" maxOccurs="1" minOccurs="0">
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="administrativeType">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element ref="pref2:source" maxOccurs="1"
+				minOccurs="1">
+			</xsd:element>
+			<xsd:element name="collection" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:identifier" maxOccurs="1"
+				minOccurs="1">
+			</xsd:element>
+			<xsd:element ref="pref2:title" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element name="alternative" type="xsd:string"
+				maxOccurs="1" minOccurs="1">
+			</xsd:element>
+			<xsd:element ref="pref2:medium" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element name="extentOriginal" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:spatial" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:temporal" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:created" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element name="condition" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:relation" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:rights" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="descriptiveType">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element ref="pref2:subject" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element name="keywords" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:description" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:creator" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:publisher" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+            <xsd:element name="contributor" type="sdas:contributorType" maxOccurs="1" minOccurs="0"></xsd:element>
+            <xsd:element ref="pref2:date" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:type" maxOccurs="1"
+				minOccurs="1">
+			</xsd:element>
+			<xsd:element ref="pref2:coverage" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element ref="pref2:language" maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+
+			<xsd:element name="dialect" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="techincalType">
+		<xsd:choice maxOccurs="unbounded">
+			
+			<xsd:element name="format"  type="sdas:formatType"
+				maxOccurs="1" minOccurs="0"></xsd:element>
+			<xsd:element name="aToDConvertor" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="extent" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="dateOfDigitization" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="lTO6TapeNumber" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="hDDNumber" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="miscellaneousType">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="remarks" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+
+
+    <xsd:complexType name="contributorType">
+    	<xsd:choice maxOccurs="unbounded">
+    		<xsd:element ref="pref2:contributor"  maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+    		<xsd:element name="artist" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="accompanyingArtist" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+
+			</xsd:element>
+			<xsd:element name="recordist" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="composer" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="lyricist" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="anyOther" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+    	</xsd:choice>
+    </xsd:complexType>
+    
+    <xsd:complexType name="formatType">
+    	<xsd:choice maxOccurs="unbounded">
+    	<xsd:element ref="pref2:format"  maxOccurs="unbounded"
+				minOccurs="0">
+			</xsd:element>
+			<xsd:element name="codec" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+			<xsd:element name="bitRateOrBitDepth" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+
+			<xsd:element name="samplingFrequency" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+
+			<xsd:element name="playbackEquipment" type="xsd:string"
+				maxOccurs="unbounded" minOccurs="0">
+			</xsd:element>
+    	</xsd:choice>
+    </xsd:complexType>
+</xsd:schema>
