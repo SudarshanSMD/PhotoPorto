@@ -55,8 +55,8 @@ namespace PhotoPorto
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: "1667170746876208",
-               appSecret: "ec790ad66b0e7bc94a29793ac4418dc9");
+               appId: "YOUR-APP-ID",
+               appSecret: "YOUR-APP-SECRET");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
