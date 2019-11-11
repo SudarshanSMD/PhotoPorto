@@ -28,10 +28,17 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: PublishPipelineArtifact@1
+
+- task: CopyFiles@2
   inputs:
-    path: $(System.DefaultWorkingDirectory)/bin/WebApp
-    artifact: WebApp
+   # contents: '_buildOutput/**'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+    
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: WebApp
+
 
 - task: VSTest@2
   inputs:
