@@ -1,3 +1,9 @@
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+
 stages:
 #BUILD Stage
 - stage: Build
@@ -5,11 +11,6 @@ stages:
   - job: Build
     pool:
       vmImage: 'windows-latest'
-      variables:
-        solution: '**/*.sln'
-        buildPlatform: 'Any CPU'
-        buildConfiguration: 'Release'
-
     continueOnError: true
     steps:
     - task: NuGetToolInstaller@1
