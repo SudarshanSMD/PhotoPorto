@@ -2,7 +2,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  appServiceName: 'PhotoPortoApp'
+  appServiceName: 'photoporto'
   azureSubscription: 'ServiceConnectionSMD'
   artifactName: '_SudarshanSMD.PhotoPorto'
 
