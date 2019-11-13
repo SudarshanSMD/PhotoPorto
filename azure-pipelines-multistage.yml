@@ -75,3 +75,18 @@ stages:
               appType: webApp
               WebAppName: '$(appServiceName)'              
               packageForLinux: '$(System.ArtifactsDirectory)/_SudarshanSMD.PhotoPorto/PhotoPorto.zip'
+
+
+# DEPLOY STAGE
+- stage: release
+  dependsOn: dev_deploy
+  jobs:
+  - deployment: release
+    pool:
+      vmImage: 'windows-latest'
+    environment: 'dev-hello'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo "hello, dev world !!!"
