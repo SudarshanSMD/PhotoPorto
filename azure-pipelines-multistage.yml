@@ -3,7 +3,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   appServiceName: 'PhotoPortoApp'
-  azureSubscription: 'Visual Studio Professional (16195a49-804b-4707-bb52-686a311b9b98)'
+  azureSubscription: 'ServiceConnectionSMD'
 
 
 stages:
