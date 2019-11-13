@@ -27,15 +27,15 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
         
-    - task: CopyFiles@2
-      inputs:
-      # contents: '_buildOutput/**'
-        targetFolder: $(Build.ArtifactStagingDirectory)
+#    - task: CopyFiles@2
+#      inputs:
+#      # contents: '_buildOutput/**'
+#        targetFolder: $(Build.ArtifactStagingDirectory)
     
-    - task: PublishBuildArtifacts@1
-      inputs:
-        pathToPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: _SudarshanSMD.PhotoPorto
+#    - task: PublishBuildArtifacts@1
+#      inputs:
+#        pathToPublish: $(Build.ArtifactStagingDirectory)
+#        artifactName: _SudarshanSMD.PhotoPorto
 
 
     - task: VSTest@2
@@ -61,10 +61,10 @@ stages:
           steps:
           - script: echo "hello, dev world !!!"
 
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              artifactName: '_SudarshanSMD.PhotoPorto'
-              targetPath: $(Build.SourcesDirectory)/bin
+#          - task: DownloadPipelineArtifact@2
+#            inputs:
+#              artifactName: '_SudarshanSMD.PhotoPorto'
+#              targetPath: $(Build.SourcesDirectory)/bin
 
           #Your build pipeline references an undefined variable named ‘Parameters.ConnectedServiceName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
           #Your build pipeline references an undefined variable named ‘Parameters.WebAppKind’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
@@ -75,4 +75,4 @@ stages:
               azureSubscription: '$(azureSubscription)'
               appType: webApp
               WebAppName: '$(appServiceName)'
-              packageForLinux: '$(System.DefaultWorkingDirectory)/_SudarshanSMD.PhotoPorto/_SudarshanSMD.PhotoPorto/PhotoPorto.zip'
+#              packageForLinux: '$(System.DefaultWorkingDirectory)/_SudarshanSMD.PhotoPorto/_SudarshanSMD.PhotoPorto/PhotoPorto.zip'
