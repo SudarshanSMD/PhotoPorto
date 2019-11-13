@@ -4,6 +4,7 @@ variables:
   buildConfiguration: 'Release'
   appServiceName: 'PhotoPortoApp'
   azureSubscription: 'ServiceConnectionSMD'
+  artifactName: '_SudarshanSMD.PhotoPorto'
 
 
 stages:
@@ -35,7 +36,7 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: _SudarshanSMD.PhotoPorto
+        artifactName: $(artifactName)
 
 
     - task: VSTest@2
@@ -60,18 +61,21 @@ stages:
         deploy:
           steps:
           - script: echo "hello, dev world !!!"
+          - download: none
 
-#          - task: DownloadPipelineArtifact@2
-#            inputs:
-#              artifactName: '_SudarshanSMD.PhotoPorto'
-#              targetPath: $(Build.SourcesDirectory)/bin
+          - task: DownloadBuildArtifacts@0
+            inputs:
+                artifactName: $(artifactName)
+                buildType: 'current'
+                downloadType: 'single'
+                downloadPath: '$(System.ArtifactsDirectory)'
 
           #Your build pipeline references an undefined variable named ‘Parameters.ConnectedServiceName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
           #Your build pipeline references an undefined variable named ‘Parameters.WebAppKind’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
           #Your build pipeline references an undefined variable named ‘Parameters.WebAppName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
           - task: AzureRmWebAppDeployment@4
             displayName: 'Deploy Azure App Service'
-            inputs:
+            inputs:              
               azureSubscription: '$(azureSubscription)'
               appType: webApp
               WebAppName: '$(appServiceName)'              
