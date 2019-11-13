@@ -32,10 +32,10 @@ stages:
       # contents: '_buildOutput/**'
         targetFolder: $(Build.ArtifactStagingDirectory)
     
-#    - task: PublishBuildArtifacts@1
-#      inputs:
-#        pathToPublish: $(Build.ArtifactStagingDirectory)
-#        artifactName: _SudarshanSMD.PhotoPorto
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        artifactName: _SudarshanSMD.PhotoPorto
 
 
     - task: VSTest@2
@@ -74,5 +74,5 @@ stages:
             inputs:
               azureSubscription: '$(azureSubscription)'
               appType: webApp
-              WebAppName: '$(appServiceName)'
+              WebAppName: '$(appServiceName)'              
 #              packageForLinux: '$(System.DefaultWorkingDirectory)/_SudarshanSMD.PhotoPorto/_SudarshanSMD.PhotoPorto/PhotoPorto.zip'
