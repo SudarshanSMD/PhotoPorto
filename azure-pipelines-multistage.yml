@@ -25,7 +25,6 @@ stages:
        command: push
        feedsToUse: select
        vstsFeed: PhotoPorto
-       packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
        nuGetFeedType: internal
        publishVstsFeed: PhotoPorto
        verbosityPush: Detailed
