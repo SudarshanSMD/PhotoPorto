@@ -16,9 +16,17 @@ stages:
     continueOnError: true
     steps:
     - task: NuGetToolInstaller@1
+#    - task: NuGetCommand@2
+#      inputs:
+#       restoreSolution: '**/*.sln'
+
     - task: NuGetCommand@2
       inputs:
+       command: push
+       feedsToUse: select
+       vstsFeed: PhotoPorto
        restoreSolution: '**/*.sln'
+
 
     - task: VSBuild@1
       inputs:
@@ -31,7 +39,7 @@ stages:
       inputs:
       # contents: '_buildOutput/**'
         targetFolder: $(Build.ArtifactStagingDirectory)
-    
+     
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
