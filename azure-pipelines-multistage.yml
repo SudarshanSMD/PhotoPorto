@@ -20,12 +20,17 @@ stages:
       inputs:
        restoreSolution: '**/*.sln'
 
+    - task: VSBuild@1
+      inputs:
+        solution: '**/*.sln'
+        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+        
     - task: NuGetCommand@2
       inputs:
        command: pack
        packagesToPack: '**/*.csproj'
-
-
     - task: NuGetCommand@2
       inputs:
        command: push
@@ -35,13 +40,6 @@ stages:
        publishVstsFeed: PhotoPorto
        verbosityPush: Detailed
 
-    - task: VSBuild@1
-      inputs:
-        solution: '**/*.sln'
-        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
-        
     - task: CopyFiles@2
       inputs:
       # contents: '_buildOutput/**'
