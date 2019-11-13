@@ -24,15 +24,16 @@ stages:
         msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-    - task: CopyFiles@2
-      inputs:
-      # contents: '_buildOutput/**'
-        targetFolder: $(Build.ArtifactStagingDirectory)
+        
+ #   - task: CopyFiles@2
+ #     inputs:
+ #     # contents: '_buildOutput/**'
+ #       targetFolder: $(Build.ArtifactStagingDirectory)
     
-    - task: PublishBuildArtifacts@1
-      inputs:
-        pathToPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: _SudarshanSMD.PhotoPorto
+   # - task: PublishBuildArtifacts@1
+   #   inputs:
+   #     pathToPublish: $(Build.ArtifactStagingDirectory)
+   #     artifactName: _SudarshanSMD.PhotoPorto
 
 
     - task: VSTest@2
