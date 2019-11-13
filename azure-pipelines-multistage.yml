@@ -45,10 +45,6 @@ stages:
         configuration: '$(buildConfiguration)'
 
 # DEPLOY STAGE
-
-# Set the job
-# download the artifacts 
-# Run Task to Azure dev deploy
 - stage: dev_deploy
   dependsOn: Build
   jobs:
@@ -61,18 +57,16 @@ stages:
         deploy:
           steps:
           - script: echo "hello, dev world !!!"
+          # with the 'deployment' job its unclear how the inbuilt download task works. So have disabled the inbuild download task, and have defined our own
           - download: none
-
+          # Not sure of what directory we should be using for the Artifacts.
+          # Is it the Build.ArtifactsDirectory or System.ArtifactsDirectory?
           - task: DownloadBuildArtifacts@0
             inputs:
                 artifactName: $(artifactName)
                 buildType: 'current'
                 downloadType: 'single'
                 downloadPath: '$(System.ArtifactsDirectory)'
-
-          #Your build pipeline references an undefined variable named ‘Parameters.ConnectedServiceName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-          #Your build pipeline references an undefined variable named ‘Parameters.WebAppKind’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-          #Your build pipeline references an undefined variable named ‘Parameters.WebAppName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
           - task: AzureRmWebAppDeployment@4
             displayName: 'Deploy Azure App Service'
             inputs:              
