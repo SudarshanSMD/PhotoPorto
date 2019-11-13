@@ -79,4 +79,4 @@ stages:
               azureSubscription: '$(azureSubscription)'
               appType: webApp
               WebAppName: '$(appServiceName)'              
-              packageForLinux: '$(System.DefaultWorkingDirectory)/_SudarshanSMD.PhotoPorto/PhotoPorto.zip'
+              packageForLinux: '$(System.ArtifactsDirectory)/_SudarshanSMD.PhotoPorto/PhotoPorto.zip'
