@@ -4,6 +4,8 @@ variables:
   appServiceName: 'photoporto'
   azureSubscription: 'ServiceConnectionSMD'
   artifactName: '_SudarshanSMD.PhotoPorto'
+  buildEnvironment: 'PhotoPortoBuild'
+  releaseEnvironment: 'PhotoPortoRelease'
 
 
 stages:
@@ -64,7 +66,7 @@ stages:
   - deployment: dev_deploy
     pool:
       vmImage: 'windows-latest'
-    environment: 'dev-hello'
+    environment: $(buildEnvironment)
     strategy:
       runOnce:
         deploy:
@@ -97,7 +99,7 @@ stages:
   - deployment: release
     pool:
       vmImage: 'windows-latest'
-    environment: 'PhotoPortoRelease'
+    environment: $(releaseEnvironment)
     strategy:
       runOnce:
         deploy:
