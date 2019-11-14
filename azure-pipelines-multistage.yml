@@ -37,9 +37,9 @@ stages:
       inputs:
        command: push
        feedsToUse: select
-       vstsFeed: PhotoPorto
+       vstsFeed: 'PhotoPorto'
        nuGetFeedType: internal
-       publishVstsFeed: PhotoPorto
+       publishVstsFeed: 'PhotoPorto'
        verbosityPush: Detailed
        minorVersion: $(Build.DefinitionVersion)
 
