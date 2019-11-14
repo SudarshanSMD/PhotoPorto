@@ -39,7 +39,7 @@ stages:
        nuGetFeedType: internal
        publishVstsFeed: PhotoPorto
        verbosityPush: Detailed
-       minorVersion: $(Build.BuildNumber)
+       minorVersion: $(Build.DefinitionVersion)
 
     - task: CopyFiles@2
       inputs:
