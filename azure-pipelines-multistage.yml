@@ -29,17 +29,17 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
         
-    - task: NuGetCommand@2
-      inputs:
-       command: pack
-       packagesToPack: '**/*.csproj'
-    - task: NuGetCommand@2
-      inputs:
-       command: push
+#    - task: NuGetCommand@2
+#      inputs:
+#       command: pack
+#       packagesToPack: '**/*.csproj'
+#    - task: NuGetCommand@2
+#      inputs:
+#       command: push
 #       feedsToUse: select
 #       vstsFeed: 'PhotoPorto'
 #       nuGetFeedType: internal
-       publishVstsFeed: 'PhotoPorto'
+#       publishVstsFeed: 'PhotoPorto'
 #       verbosityPush: Detailed
 #       minorVersion: $(Build.DefinitionVersion)
 
