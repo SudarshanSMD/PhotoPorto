@@ -96,7 +96,7 @@ stages:
   - deployment: release
     pool:
       vmImage: 'windows-latest'
-    environment: 'dev-hello'
+    environment: 'PhotoPortoRelease'
     strategy:
       runOnce:
         deploy:
