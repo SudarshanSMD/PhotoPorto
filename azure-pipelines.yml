@@ -39,7 +39,6 @@ steps:
     pathToPublish: $(Build.ArtifactStagingDirectory)
     artifactName: _SudarshanSMD.PhotoPorto
 
-
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
